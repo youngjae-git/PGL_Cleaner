@@ -1,11 +1,8 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next",
-  "framework": "nextjs",
   "regions": ["icn1"],
   "functions": {
-    "src/app/api/**/*.ts": {
-      "runtime": "nodejs18.x"
+    "src/app/api/saveReport/route.ts": {
+      "maxDuration": 30
     }
   }
 }
