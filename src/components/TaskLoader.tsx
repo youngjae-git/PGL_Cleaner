@@ -175,17 +175,24 @@ export default function TaskLoader() {
 
   if (isLoading) {
     return (
-      <main style={{ padding: '20px', textAlign: 'center' }}>
-        <h1>Verifying authentication information...</h1>
+      <main className="p-5 text-center min-h-screen flex flex-col justify-center items-center bg-background">
+        <div className="card p-8 rounded-lg max-w-md w-full">
+          <h1 className="text-primary text-xl font-semibold mb-2">Verifying authentication information...</h1>
+          <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full mx-auto"></div>
+        </div>
       </main>
     );
   }
 
   if (error) {
     return (
-      <main style={{ padding: '20px', textAlign: 'center' }}>
-        <h1>🚫 Access Error</h1>
-        <p style={{ color: 'red' }}>{error}</p>
+      <main className="p-5 text-center min-h-screen flex flex-col justify-center items-center bg-background">
+        <div className="card p-8 rounded-lg max-w-md w-full">
+          <h1 className="text-primary text-xl font-semibold mb-4">🚫 Access Error</h1>
+          <p className="text-destructive font-medium bg-red-50 dark:bg-red-950/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
+            {error}
+          </p>
+        </div>
       </main>
     );
   }

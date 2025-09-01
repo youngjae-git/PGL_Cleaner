@@ -1,8 +1,33 @@
 @import "tailwindcss";
 
 :root {
+  /* 기본 색상 변수 */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1a1a1a;
+  --muted-foreground: #6b7280;
+  --border: #e5e7eb;
+  --input: #ffffff;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #1f2937;
+  --accent: #f9fafb;
+  --accent-foreground: #1f2937;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --success: #10b981;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #ffffff;
+  --ring: #3b82f6;
+  
+  /* 텍스트 색상 계층 */
+  --text-primary: #1a1a1a;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --text-disabled: #9ca3af;
 }
 
 @theme inline {
@@ -14,13 +39,230 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f0f0f;
+    --foreground: #f5f5f5;
+    --muted-foreground: #a1a1aa;
+    --border: #27272a;
+    --input: #18181b;
+    --card: #18181b;
+    --card-foreground: #f5f5f5;
+    --primary: #3b82f6;
+    --primary-foreground: #ffffff;
+    --secondary: #27272a;
+    --secondary-foreground: #f5f5f5;
+    --accent: #27272a;
+    --accent-foreground: #f5f5f5;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+    --success: #059669;
+    --success-foreground: #ffffff;
+    --warning: #d97706;
+    --warning-foreground: #ffffff;
+    --ring: #3b82f6;
+    
+    /* 다크 모드 텍스트 색상 */
+    --text-primary: #f5f5f5;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-disabled: #6b7280;
   }
 }
 
+/* 기본 요소 스타일 */
+* {
+  border-color: var(--border);
+}
+
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 텍스트 유틸리티 클래스 */
+.text-primary {
+  color: var(--text-primary) !important;
+}
+
+.text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.text-disabled {
+  color: var(--text-disabled) !important;
+}
+
+/* 고대비 텍스트 보장 */
+.text-high-contrast {
+  color: var(--foreground);
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+/* 버튼 기본 스타일 */
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border: none;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  border: 1px solid var(--border);
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent);
+  border-color: var(--ring);
+}
+
+/* 카드 스타일 */
+.card {
+  background-color: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* 입력 필드 스타일 */
+.input {
+  background-color: var(--input);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  transition: border-color 0.2s ease-in-out;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* 접근성 개선 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 모바일 디바이스 최적화 */
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 16px; /* iOS Safari zoom 방지 */
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    min-height: 44px; /* 터치 접근성 */
+    min-width: 44px;
+  }
+  
+  input,
+  textarea {
+    font-size: 16px; /* iOS Safari zoom 방지 */
+  }
+}
+
+/* 터치 디바이스 최적화 */
+@media (hover: none) and (pointer: coarse) {
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: none; /* 터치 디바이스에서 hover 효과 제거 */
+  }
+}
+
+/* 고대비 모드 지원 */
+@media (prefers-contrast: high) {
+  :root {
+    --foreground: #000000;
+    --background: #ffffff;
+    --border: #000000;
+    --text-primary: #000000;
+    --text-secondary: #000000;
+    --text-muted: #000000;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --foreground: #ffffff;
+      --background: #000000;
+      --border: #ffffff;
+      --text-primary: #ffffff;
+      --text-secondary: #ffffff;
+      --text-muted: #ffffff;
+    }
+  }
+  
+  /* 고대비 모드에서 추가 대비 강화 */
+  .text-primary,
+  .text-secondary,
+  .text-muted {
+    text-shadow: none;
+    font-weight: 600;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    border: 2px solid currentColor;
+  }
+}
+
+/* 시각 장애인을 위한 접근성 개선 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus 가시성 개선 */
+*:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* 고대비 텍스트 보장을 위한 추가 클래스 */
+.text-contrast-safe {
+  color: var(--foreground);
+  background-color: var(--background);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+/* 로딩 애니메이션 개선 */
+@keyframes pulse-safe {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-safe {
+  animation: pulse-safe 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
