@@ -37,36 +37,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0f0f0f;
-    --foreground: #f5f5f5;
-    --muted-foreground: #a1a1aa;
-    --border: #27272a;
-    --input: #18181b;
-    --card: #18181b;
-    --card-foreground: #f5f5f5;
-    --primary: #3b82f6;
-    --primary-foreground: #ffffff;
-    --secondary: #27272a;
-    --secondary-foreground: #f5f5f5;
-    --accent: #27272a;
-    --accent-foreground: #f5f5f5;
-    --destructive: #dc2626;
-    --destructive-foreground: #ffffff;
-    --success: #059669;
-    --success-foreground: #ffffff;
-    --warning: #d97706;
-    --warning-foreground: #ffffff;
-    --ring: #3b82f6;
-    
-    /* 다크 모드 텍스트 색상 */
-    --text-primary: #f5f5f5;
-    --text-secondary: #d1d5db;
-    --text-muted: #9ca3af;
-    --text-disabled: #6b7280;
-  }
-}
+/* 다크모드 비활성화 - 항상 라이트 모드 유지 */
 
 /* 기본 요소 스타일 */
 * {
@@ -201,16 +172,7 @@ body {
     --text-muted: #000000;
   }
   
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --foreground: #ffffff;
-      --background: #000000;
-      --border: #ffffff;
-      --text-primary: #ffffff;
-      --text-secondary: #ffffff;
-      --text-muted: #ffffff;
-    }
-  }
+  /* 고대비 모드에서도 라이트 모드 유지 */
   
   /* 고대비 모드에서 추가 대비 강화 */
   .text-primary,

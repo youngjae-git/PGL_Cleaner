@@ -175,10 +175,10 @@ export default function TaskLoader() {
 
   if (isLoading) {
     return (
-      <main className="p-5 text-center min-h-screen flex flex-col justify-center items-center bg-background">
-        <div className="card p-8 rounded-lg max-w-md w-full">
-          <h1 className="text-primary text-xl font-semibold mb-2">Verifying authentication information...</h1>
-          <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full mx-auto"></div>
+      <main className="p-5 text-center min-h-screen flex flex-col justify-center items-center bg-white">
+        <div className="bg-white border border-gray-200 p-8 rounded-lg max-w-md w-full shadow-lg">
+          <h1 className="text-gray-800 text-xl font-semibold mb-2">Verifying authentication information...</h1>
+          <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto"></div>
         </div>
       </main>
     );
@@ -186,10 +186,10 @@ export default function TaskLoader() {
 
   if (error) {
     return (
-      <main className="p-5 text-center min-h-screen flex flex-col justify-center items-center bg-background">
-        <div className="card p-8 rounded-lg max-w-md w-full">
-          <h1 className="text-primary text-xl font-semibold mb-4">🚫 Access Error</h1>
-          <p className="text-destructive font-medium bg-red-50 dark:bg-red-950/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
+      <main className="p-5 text-center min-h-screen flex flex-col justify-center items-center bg-white">
+        <div className="bg-white border border-gray-200 p-8 rounded-lg max-w-md w-full shadow-lg">
+          <h1 className="text-gray-800 text-xl font-semibold mb-4">🚫 Access Error</h1>
+          <p className="text-red-700 font-medium bg-red-50 p-4 rounded-lg border border-red-200">
             {error}
           </p>
         </div>

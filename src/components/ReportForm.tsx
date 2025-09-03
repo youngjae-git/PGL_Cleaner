@@ -169,23 +169,23 @@ export default function ReportForm({ task, uid, taskId }: ReportFormProps) {
   };
 
   return (
-    <ClientOnly fallback={<div className="p-4 text-center text-primary">Loading...</div>}>
-      <div className="bg-background min-h-screen font-sans">
-        <div className="p-4 max-w-lg mx-auto card shadow-lg rounded-b-xl">
+    <ClientOnly fallback={<div className="p-4 text-center text-gray-800">Loading...</div>}>
+      <div className="bg-white min-h-screen font-sans">
+        <div className="p-4 max-w-lg mx-auto bg-white border border-gray-200 shadow-lg rounded-b-xl">
           
           {reportType && (
             <div suppressHydrationWarning={true}>
-              <button onClick={handleBack} className="flex items-center gap-1 text-secondary hover:text-primary mb-4 transition-colors">
+              <button onClick={handleBack} className="flex items-center gap-1 text-gray-600 hover:text-blue-500 mb-4 transition-colors">
                 <BackIcon /> Back
               </button>
-              <h2 className="text-2xl font-bold text-center mb-6 text-primary">
+              <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
                 {reportType === 'issue' ? 'Report Cleaning Issue' : 'Report Cleaning Completion'}
               </h2>
               
               <div className="space-y-4">
                 <button 
                   onClick={() => document.getElementById('gallery-input')?.click()}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 btn-primary font-semibold rounded-lg shadow-md transition-all transform hover:scale-105"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-md transition-all transform hover:scale-105"
                 >
                   <UploadIcon /> Select Photos/Videos
                 </button>
@@ -194,18 +194,18 @@ export default function ReportForm({ task, uid, taskId }: ReportFormProps) {
                 {files.length > 0 && (
                   <div className="mt-4 space-y-2">
                     <div className="flex justify-between items-center text-sm">
-                      <span className="font-semibold text-secondary">{files.length} files selected</span>
-                      <button onClick={removeAllFiles} className="text-destructive hover:opacity-80 font-semibold transition-opacity">Remove All</button>
+                      <span className="font-semibold text-gray-700">{files.length} files selected</span>
+                      <button onClick={removeAllFiles} className="text-red-500 hover:text-red-600 font-semibold transition-colors">Remove All</button>
                     </div>
-                    <div className="border border-border rounded-lg p-2 max-h-56 overflow-y-auto space-y-2 bg-card">
+                    <div className="border border-gray-200 rounded-lg p-2 max-h-56 overflow-y-auto space-y-2 bg-gray-50">
                       {files.map((file, index) => (
                         <div key={index} className="flex items-center gap-3 p-1">
                           <img src={URL.createObjectURL(file)} alt={file.name} className="w-12 h-12 object-cover rounded-md cursor-pointer flex-shrink-0" onClick={() => openPreview(file, index)} />
                           <div className="flex-1 overflow-hidden">
-                            <p className="text-xs text-muted truncate">{generatedFileNames[index] || file.name}</p>
-                            <p className="text-xs text-disabled">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                            <p className="text-xs text-gray-600 truncate">{generatedFileNames[index] || file.name}</p>
+                            <p className="text-xs text-gray-400">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                           </div>
-                          <button onClick={() => removeFile(index)} className="p-1 text-muted hover:text-destructive transition-colors"><RemoveIcon /></button>
+                          <button onClick={() => removeFile(index)} className="p-1 text-gray-400 hover:text-red-500 transition-colors"><RemoveIcon /></button>
                         </div>
                       ))}
                     </div>
@@ -213,24 +213,34 @@ export default function ReportForm({ task, uid, taskId }: ReportFormProps) {
                 )}
               </div>
               
-              <textarea 
+                              <textarea 
                 rows={5} 
                 value={comment} 
                 onChange={(e) => setComment(e.target.value)} 
                 placeholder="Enter a message (optional)" 
-                className="w-full mt-4 p-3 input rounded-lg resize-none" 
+                className="w-full mt-4 p-3 border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg resize-none bg-white text-gray-800" 
               />
               
               <button 
                 onClick={handleSubmit} 
                 disabled={uploading} 
-                className={`w-full mt-4 p-4 text-lg font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg disabled:cursor-not-allowed disabled:scale-100 disabled:opacity-50 ${uploading ? 'bg-muted-foreground text-primary-foreground' : (reportType === 'issue' ? 'bg-gradient-to-r from-destructive to-warning text-destructive-foreground' : 'bg-gradient-to-r from-success to-primary text-success-foreground')}`}
+                className={`w-full mt-4 p-4 text-lg font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg disabled:cursor-not-allowed disabled:scale-100 disabled:opacity-50 ${
+                  uploading 
+                    ? 'bg-gray-400 text-white' 
+                    : reportType === 'issue' 
+                      ? 'bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white shadow-orange-200' 
+                      : 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-green-200'
+                }`}
               >
-                {uploading ? 'Submitting...' : 'Submit Report'}
+                {uploading ? 'Submitting...' : 
+                  reportType === 'issue' 
+                    ? '🚨 Submit Issue Report' 
+                    : '✅ Submit Completion Report'
+                }
               </button>
               
               {statusMessage && (
-                <div className={`mt-4 p-3 rounded-lg text-center text-sm font-medium ${statusMessage.includes('Error') ? 'bg-red-50 dark:bg-red-950/20 text-destructive border border-red-200 dark:border-red-800' : 'bg-green-50 dark:bg-green-950/20 text-success border border-green-200 dark:border-green-800'}`}>
+                <div className={`mt-4 p-3 rounded-lg text-center text-sm font-medium ${statusMessage.includes('Error') ? 'bg-red-50 text-red-700 border border-red-200' : 'bg-green-50 text-green-700 border border-green-200'}`}>
                   {statusMessage}
                 </div>
               )}
@@ -239,28 +249,28 @@ export default function ReportForm({ task, uid, taskId }: ReportFormProps) {
 
           {!reportType && (
             <div className="text-center" suppressHydrationWarning={true}>
-              <h2 className="text-2xl font-bold text-primary mb-2">Cleaning Management</h2>
-              <p className="text-secondary mb-6">Please check the task and start reporting.</p>
-              <div className="bg-secondary/30 p-4 rounded-lg mb-8 text-left text-sm space-y-2 border border-border">
-                <p><strong className="text-primary">Property Name:</strong> <span className="text-secondary font-medium">{task.property_name || 'Loading...'}</span></p>
-                <p><strong className="text-primary">Cleaner Name:</strong> <span className="text-secondary font-medium">{task.cleaner_name || 'Loading...'}</span></p>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">Cleaning Management</h2>
+              <p className="text-gray-600 mb-6">Please check the task and start reporting.</p>
+              <div className="bg-gray-50 p-4 rounded-lg mb-8 text-left text-sm space-y-2 border border-gray-200">
+                <p><strong className="text-gray-800">Property Name:</strong> <span className="text-gray-600 font-medium">{task.property_name || 'Loading...'}</span></p>
+                <p><strong className="text-gray-800">Cleaner Name:</strong> <span className="text-gray-600 font-medium">{task.cleaner_name || 'Loading...'}</span></p>
               </div>
               <div className="grid gap-4">
-                <button onClick={() => setReportType('issue')} className="w-full py-4 px-4 bg-gradient-to-r from-destructive to-warning text-destructive-foreground font-semibold rounded-lg shadow-md hover:scale-105 transition-transform">Report Cleaning Issue</button>
-                <button onClick={() => setReportType('finish')} className="w-full py-4 px-4 bg-gradient-to-r from-success to-primary text-success-foreground font-semibold rounded-lg shadow-md hover:scale-105 transition-transform">Report Cleaning Completion</button>
+                <button onClick={() => setReportType('issue')} className="w-full py-4 px-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg shadow-md hover:scale-105 transition-all">Report Cleaning Issue</button>
+                <button onClick={() => setReportType('finish')} className="w-full py-4 px-4 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow-md hover:scale-105 transition-all">Report Cleaning Completion</button>
               </div>
             </div>
           )}
 
           {previewModal.show && (
             <div onClick={closePreview} className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-              <div onClick={(e) => e.stopPropagation()} className="relative bg-card rounded-lg shadow-2xl">
-                <button onClick={closePreview} className="absolute -top-4 -right-4 text-primary-foreground bg-primary hover:bg-primary/90 rounded-full p-1 transition-colors"><CloseIcon /></button>
+              <div onClick={(e) => e.stopPropagation()} className="relative bg-white rounded-lg shadow-2xl">
+                <button onClick={closePreview} className="absolute -top-4 -right-4 text-white bg-blue-500 hover:bg-blue-600 rounded-full p-1 transition-colors"><CloseIcon /></button>
                 <img src={URL.createObjectURL(previewModal.file!)} alt="preview" className="max-h-[80vh] max-w-[90vw] rounded-lg" />
-                <div className="flex justify-between items-center p-2 bg-card rounded-b-lg border-t border-border">
-                  <button onClick={prevPreview} disabled={previewModal.index === 0} className="px-4 py-2 btn-secondary rounded disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
-                  <span className="text-sm font-semibold text-primary">{previewModal.index + 1} / {files.length}</span>
-                  <button onClick={nextPreview} disabled={previewModal.index === files.length - 1} className="px-4 py-2 btn-secondary rounded disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+                <div className="flex justify-between items-center p-2 bg-white rounded-b-lg border-t border-gray-200">
+                  <button onClick={prevPreview} disabled={previewModal.index === 0} className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors">Previous</button>
+                  <span className="text-sm font-semibold text-gray-800">{previewModal.index + 1} / {files.length}</span>
+                  <button onClick={nextPreview} disabled={previewModal.index === files.length - 1} className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors">Next</button>
                 </div>
               </div>
             </div>
